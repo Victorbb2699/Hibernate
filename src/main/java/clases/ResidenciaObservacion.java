@@ -1,10 +1,11 @@
-	package Entitys;
+	package clases;
 
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -26,7 +27,7 @@ public class ResidenciaObservacion implements Serializable{
 	@Column(columnDefinition = "varchar(200)")
 	private String observaciones;
 
-	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	private Residencias residenciaXXX;
 

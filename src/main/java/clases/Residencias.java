@@ -1,5 +1,6 @@
-package Entitys;
+package clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,11 @@ import javax.persistence.Table;
 
 import org.hibernate.mapping.Set;
 
+import com.sun.javafx.scene.CssFlags;
+
 @Entity
 @Table(name = "residencias")
-public class Residencias {
+public class Residencias implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +35,8 @@ public class Residencias {
 	@Column(columnDefinition = "varchar(30)")
 	private String nomResidencia;
 
-	@Column(columnDefinition = "varchar(6)")
-	private String codUniversidad;
+//	@Column(columnDefinition = "varchar(6)")
+//	private String codUniversidad;
 
 	@Column(columnDefinition = "integer")
 	private Integer precioMensual;
@@ -41,25 +44,26 @@ public class Residencias {
 	@Column(columnDefinition = "boolean")
 	private boolean comedor;
 
+	public Universidades getCodUniversidad() {
+		return codUniversidad;
+	}
+
+	public void setCodUniversidad(Universidades codUniversidad) {
+		this.codUniversidad = codUniversidad;
+	}
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	// (cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-	@PrimaryKeyJoinColumn(name = "codResidencia") // no crea el campo
+	@PrimaryKeyJoinColumn(name = "codResidencia")
 	private ResidenciaObservacion residenciaObservacionX;
-	
-	@OneToMany(mappedBy = "Residencias", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	List<Estancias> estancias = new ArrayList<Estancias>(); 
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name = "codResidencia")
+	List<Estancias> estancias = new ArrayList<Estancias>();
+
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codUniversidad")
+	private Universidades codUniversidad;
 	
-	public ResidenciaObservacion getResidenciaObservacionX() {
-		return residenciaObservacionX;
-	}
-
-	public void setResidenciaObservacionX(ResidenciaObservacion residenciaObservacionX) {
-		this.residenciaObservacionX = residenciaObservacionX;
-	}
-
 	public Integer getCodResidencia() {
 		return codResidencia;
 	}
@@ -76,13 +80,6 @@ public class Residencias {
 		this.nomResidencia = nomResidencia;
 	}
 
-	public String getCodUniversidad() {
-		return codUniversidad;
-	}
-
-	public void setCodUniversidad(String codUniversidad) {
-		this.codUniversidad = codUniversidad;
-	}
 
 	public Integer getPrecioMensual() {
 		return precioMensual;
@@ -100,4 +97,29 @@ public class Residencias {
 		this.comedor = comedor;
 	}
 
+	public ResidenciaObservacion getResidenciaObservacionX() {
+		return residenciaObservacionX;
+	}
+
+	public void setResidenciaObservacionX(ResidenciaObservacion residenciaObservacionX) {
+		this.residenciaObservacionX = residenciaObservacionX;
+	}
+
+	public List<Estancias> getEstancias() {
+		return estancias;
+	}
+
+	public void setEstancias(List<Estancias> estancias) {
+		this.estancias = estancias;
+	}
+
+	public Universidades getUniversidad() {
+		return codUniversidad;
+	}
+
+	public void setUniversidad(Universidades universidad) {
+		this.codUniversidad = universidad;
+	}
+
+	
 }

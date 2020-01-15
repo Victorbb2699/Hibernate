@@ -26,11 +26,11 @@ update
 pondríamos resource 
 -->
 
-<mapping class="Entitys.Universidades"/>
-<mapping class="Entitys.Estudiantes"/>
-<mapping class="Entitys.Residencias"/>
-<mapping class="Entitys.Estancias"/>
-<mapping class="Entitys.ResidenciaObservacion"/>
+<mapping class="clases.Universidades"/>
+<mapping class="clases.Estudiantes"/>
+<mapping class="clases.Residencias"/>
+<mapping class="clases.Estancias"/>
+<mapping class="clases.ResidenciaObservacion"/>
 
 
 

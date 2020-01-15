@@ -1,4 +1,4 @@
-package Entitys;
+package clases;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,17 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "universidades")
 public class Universidades implements Serializable {
 
+	
 	@Id
 	@Column(columnDefinition = "varchar(6)")
 	private String codUniversidad;
@@ -28,9 +25,18 @@ public class Universidades implements Serializable {
 	@Column(columnDefinition = "varchar(30)")
 	private String nomUniversidad;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "universidades", cascade = {CascadeType.ALL})
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codUniversidad")
 	List<Residencias> residencias = new ArrayList<Residencias>();
-	
+
+	public List<Residencias> getResidencias() {
+		return residencias;
+	}
+
+	public void setResidencias(List<Residencias> residencias) {
+		this.residencias = residencias;
+	}
+
 	public String getCodUniversidad() {
 		return codUniversidad;
 	}

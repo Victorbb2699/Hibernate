@@ -1,4 +1,4 @@
-package Entitys;
+package clases;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,11 +32,18 @@ public class Estudiantes implements Serializable {
 	@Column(columnDefinition = "varchar(9)")
 	private String telefonoEstudiante;
 
-	@OneToMany (cascade=CascadeType.ALL, fetch=FetchType.EAGER )
-	@JoinColumn(name="codEstudiante")
-	List<Estancias> estancias = new ArrayList<Estancias>(); 
-	
-	
+	@OneToMany(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+	@JoinColumn(name = "codEstudiante")
+	List<Estancias> estancias = new ArrayList<Estancias>();
+
+	public List<Estancias> getEstancias() {
+		return estancias;
+	}
+
+	public void setEstancias(List<Estancias> estancias) {
+		this.estancias = estancias;
+	}
+
 	public Integer getCodEstudiante() {
 		return codEstudiante;
 	}
@@ -68,7 +75,5 @@ public class Estudiantes implements Serializable {
 	public void setTelefonoEstudiante(String telefonoEstudiante) {
 		this.telefonoEstudiante = telefonoEstudiante;
 	}
-
-	
 
 }
