@@ -90,23 +90,29 @@ public class HibernateController implements Initializable {
 		dialog.setContentText("Introduce codigo residencia");
 		Optional<String> result = dialog.showAndWait();
 		
-		DialogResidenciasController indialog = new DialogResidenciasController(sesion);
-		Optional<String> result = indialog.showAndWait();
-
+		
 		try {
 
 			sesion.beginTransaction();
+			DialogResidenciasController indialog = new DialogResidenciasController(sesion);
+			Optional<Residencias> dialogResi = indialog.showAndWait();
 
 			Residencias residencia = new Residencias();
 			residencia = (Residencias) sesion.get(Residencias.class, Integer.parseInt(result.get()));
-
+			
+			Universidades universidad = sesion.get(Universidades.class, dialogResi.get().getUniversidad().getCodUniversidad());
+			residencia.setCodResidencia(Integer.parseInt(result.get()));
+			residencia.setCodUniversidad(universidad);
+			residencia.setNomResidencia(dialogResi.get().getNomResidencia());
+			residencia.setPrecioMensual(dialogResi.get().getPrecioMensual());
+			residencia.setComedor(dialogResi.get().isComedor());
+			
 			sesion.save(residencia);
 			sesion.getTransaction().commit();
 
 		} catch (Exception e) {
 			System.out.println("No se puede modificar esa residencia");
 			sesion.getTransaction().rollback();
-			e.printStackTrace();
 		}
 
 	}
@@ -265,12 +271,13 @@ public class HibernateController implements Initializable {
 			DialogResidenciasController resdialog = new DialogResidenciasController(sesion);
 			Optional<Residencias> res = resdialog.showAndWait();
 			sesion.beginTransaction();
+			
+			
 			sesion.save(res.get());
 
 			sesion.getTransaction().commit();
 		} catch (Exception e) {
 			sesion.getTransaction().rollback();
-			e.printStackTrace();
 		}
 
 	}

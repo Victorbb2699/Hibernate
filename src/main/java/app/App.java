@@ -21,7 +21,7 @@ public class App extends Application {
 
 		Scene scene = new Scene(controller.getView(), 640, 480);
 
-		primaryStage.setTitle("Proyecto Hibernate");
+		primaryStage.setTitle("Proyecto Hibernate - Victor Bethencourt Barrera");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
